@@ -26,4 +26,12 @@ public class JobHandler {
     public static Job getJobFromPlayer(Player player) {
         return jobs.get(player);
     }
+
+    public static Job getJobFromInt(int id) {
+        for (Job jobbs : Job.values()) {
+            if(jobbs.getId() == id)
+                return jobbs;
+        }
+        return null;
+    }
 }

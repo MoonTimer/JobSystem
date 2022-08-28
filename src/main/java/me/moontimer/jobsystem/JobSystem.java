@@ -7,6 +7,8 @@ import me.moontimer.jobsystem.listener.jobs.FisherListener;
 import me.moontimer.jobsystem.listener.jobs.JaegerListener;
 import me.moontimer.jobsystem.listener.jobs.MinerListener;
 import me.moontimer.jobsystem.listener.jobs.WoodListener;
+import me.moontimer.jobsystem.sql.MySQL;
+import me.moontimer.jobsystem.sql.MySQLHandler;
 import net.jitse.npclib.NPCLib;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -21,10 +23,13 @@ public final class JobSystem extends JavaPlugin {
     private static Economy econ = null;
     private NPCLib library;
 
+    private MySQL mySQL;
     @Override
     public void onEnable() {
 
         instance = this;
+
+        mySQL = new MySQL();
 
         if (!setupEconomy() ) {
             getServer().getPluginManager().disablePlugin(this);
@@ -55,6 +60,9 @@ public final class JobSystem extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            MySQLHandler.updateJob(player, JobHandler.getJobFromPlayer(player));
+        }
     }
 
     public static JobSystem getInstance() {
@@ -67,5 +75,9 @@ public final class JobSystem extends JavaPlugin {
 
     public NPCLib getNPCLib() {
         return library;
+    }
+
+    public MySQL getMySQL() {
+        return mySQL;
     }
 }
