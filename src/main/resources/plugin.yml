@@ -1,0 +1,6 @@
+name: Jobsystem
+version: '${project.version}'
+main: me.moontimer.jobsystem.JobSystem
+authors: [ MoonTimer ]
+description: JobSystem
+website: https://moontimer.me
